@@ -11,4 +11,4 @@ const ScrapedPageSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
 });
 
-module.exports.ScrapedPageModel = mongoose.model("Article", ScrapedPageSchema);
+module.exports.ScrapedPageModel = mongoose.model("ScrapedPage", ScrapedPageSchema);
