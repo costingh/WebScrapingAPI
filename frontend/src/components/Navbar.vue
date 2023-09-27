@@ -17,22 +17,14 @@ export default {
 </script>
 
 <template>
-	<div class="wrapper">
-		<div class="navbar">
-			<input v-model="inputValue" type="text" placeholder="Enter a website url -> (https://google.com)"
-				class="input" />
-			<div @click="getValue" class="filled-btn">Scrape</div>
-		</div>
+	<div class="container-wrapper">
+		<input v-model="inputValue" type="text" placeholder="Enter a website url -> (https://google.com)" class="input" />
+		<div @click="getValue" class="filled-btn">Scrape</div>
 	</div>
 </template>
 
 <style scoped>
-.wrapper {
-	width: 100%;
-	padding: 40px 80px;
-}
-
-.navbar {
+.container-wrapper {
 	width: 80%;
 	margin: 0 auto;
 	border: 1px solid #ccc;

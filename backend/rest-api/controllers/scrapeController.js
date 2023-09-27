@@ -53,7 +53,6 @@ const scrapePage = (req, res) => {
 		if (options?.extract_sentiment) {
 			console.log('Extracting sentiment from the scraped data...')
 
-			console.log(mocks.mockData?.result)
 			let captions = [];
 
 			mocks.mockData?.result?.content.map(element => {
@@ -63,7 +62,7 @@ const scrapePage = (req, res) => {
 			})
 			const { result, error } = sentimentLib.analyzeSentimentForCaptions(captions)
 
-			res.status(201).json({ error: error, result: result });
+			res.status(201).json({ error: error, result: mocks.mockData?.result });
 		} else res.status(201).json({ error: null, result: result });
 	}
 };
