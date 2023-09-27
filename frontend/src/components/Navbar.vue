@@ -1,29 +1,67 @@
 <script>
 export default {
+	props: {
+		loading: Boolean 
+	},
 	data() {
 		return {
-			inputValue: 'http://localhost:3000/api/scrape/page'
-		};
+			inputValue: 'https://wsa-test.vercel.app/',
+		}
 	},
 	methods: {
-		getValue() {
-			this.startScrapingPage(this.inputValue);
+		async getValue() {
+			if (this.loading) return
+			try {
+				await this.startScrapingPage(this.inputValue)
+			} finally {
+			}
 		},
-		startScrapingPage(pageUrl) {
-			this.$emit('startScraping', { pageUrl: pageUrl });
+		async startScrapingPage(pageUrl) {
+			this.$emit('startScraping', { pageUrl: pageUrl })
+
 		}
 	}
-};
+}
 </script>
 
 <template>
 	<div class="container-wrapper">
 		<input v-model="inputValue" type="text" placeholder="Enter a website url -> (https://google.com)" class="input" />
-		<div @click="getValue" class="filled-btn">Scrape</div>
+		<div @click="getValue" class="filled-btn">
+			<template v-if="!loading"> Scrape </template>
+			<template v-else>
+				<div class="d-flex">
+					<div class="spinner"></div>
+				</div>
+			</template>
+		</div>
 	</div>
 </template>
 
 <style scoped>
+.spinner {
+	border: 4px solid rgba(255, 255, 255, 0.3);
+	border-top: 4px solid #888;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	animation: spin 1s linear infinite;
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 .container-wrapper {
 	width: 80%;
 	margin: 0 auto;
