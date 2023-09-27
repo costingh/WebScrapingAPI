@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 var logger = require('morgan');
+const cors = require('cors');
 
 // database config
 const db = require("./config/db.js");
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
 
 db.connectDB(); 
+
+// Configure CORS
+app.use(cors());
 
 app.use('/api', routes);
 
