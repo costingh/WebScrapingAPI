@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const processInputString = require('../libs/WordCounter');
 
 let _DEFAULT_ELEMENTS_TO_SCRAPE = 'h3, p';
 
@@ -22,7 +23,8 @@ const parseHTML = (urlToScrape, htmlContent, options) => {
                     tag: 'img',
                     baseUrl: urlToScrape,
                     src: src,
-                    alt: alt
+                    alt: alt,
+                    words: 0
                 });
             } else  if ($(element).is('a')) {
                 const href = $(element).attr('href');
@@ -32,12 +34,13 @@ const parseHTML = (urlToScrape, htmlContent, options) => {
                     tag: 'a',
                     baseUrl: urlToScrape,
                     href: href,
-                    text: text
+                    text: text,
+                    words: processInputString.WordCounter(text) || 0
                 });
             } else {
                 const tag = $(element).prop('tagName').toLowerCase();
                 const text = $(element).text();
-                result.push({ tag, text });
+                result.push({ tag, text, words: processInputString.WordCounter(text) || 0});
             }
         });
     } catch (error) {
