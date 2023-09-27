@@ -4,18 +4,24 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apos-to-lex-form": "^1.0.5",
     "axios": "^1.5.1",
     "cheerio": "^1.0.0-rc.12",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^7.5.3",
-    "puppeteer": "^21.3.5"
+    "morgan": "^1.10.0",
+    "natural": "^6.7.2",
+    "puppeteer": "^21.3.5",
+    "spelling-corrector": "^3.0.0",
+    "stopword": "^2.0.8"
   }
 }
