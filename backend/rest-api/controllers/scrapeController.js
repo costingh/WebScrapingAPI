@@ -1,9 +1,12 @@
 const pupeteerScraping = require('../libs/pupeteerScraping')
 const { ScrapedPageModel } = require('../models/scrapedPage')
 const hashingLib = require('../libs/hashUrl')
+// import { ScrapingOptions, ScrapingRequestBody } from '../interfaces/ScrapingRequestBody';
+// const  { Request, Response } = require('express');
 
 const scrapePage = (req, res) => {
 	const { url, options } = req.body;
+	
 	if (!url) {
 		return res.status(400).json({ error: 'Title is required' });
 	}
