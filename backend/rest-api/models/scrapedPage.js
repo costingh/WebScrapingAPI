@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
 const ScrapedPageSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        required: true,
+    },
     page_url: {
         type: String,
         required: true,
     },
     content: {
-        type: Object,
+        type: Array,
     },
     date: { type: Date, default: Date.now },
 });
