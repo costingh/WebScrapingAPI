@@ -1,5 +1,5 @@
 export interface ScrapingOptions {
-    test: boolean;
+    test_mode: boolean;
     scrape_elements: string;
 }
 

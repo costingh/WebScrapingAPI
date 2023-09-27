@@ -6,8 +6,7 @@ var logger = require('morgan');
 const db = require("./config/db.js");
 
 // routes
-const scrapingRoutes = require('./routes/scrapeRoutes');
-const nlpRoutes = require('./routes/nlpRoutes');
+const routes = require('./routes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,8 +17,7 @@ app.use(logger('dev'));
 
 db.connectDB(); 
 
-app.use('/api/scrape', scrapingRoutes);
-app.use('/api/nlp', nlpRoutes);
+app.use('/api', routes);
 
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
