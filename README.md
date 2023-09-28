@@ -163,3 +163,21 @@ Response Data Fromat
 
 }
 ```
+
+## Improvements
+
+### Pagination
+
+* Limiting Result Size: Instead of returning the entire dataset in a single response, we should limit the number of records returned by default. For example, setting up a default limit of 10 records per page.
+
+* Allowing Custom Page Size: Allowing users to specify the number of records they want per page. We should include a query parameter in the API request, such as ?page_size=20, to let users customize the result set size.
+
+* Including Page Number: Return the current page number along with the results. This helps users keep track of where they are in the dataset.
+
+* Provide Navigation Links: Include links or URLs for navigating to the next and previous pages. For example:
+
+* Rate Limiting: Implementing rate limiting to prevent abuse and ensure fair usage.
+
+* Default Depth: Setting up a reasonable default value for maxScrapingPageDepth. This default value should strike a balance between providing useful data and preventing excessive scraping.
+
+* User Configured Depth: Allowing users to customize the maxScrapingPageDepth by including it as an option in the API request. For example, users can set ?max_depth=5 to limit scraping to a depth of 5 levels.
