@@ -12,27 +12,29 @@ const scrapePage = (req, res) => {
 	}
 
 	if (!options.test_mode) {
-		pupeteerScraping.scrapePage(url, options, (scraping_error, scrapingResult) => {
+		pupeteerScraping.scrapePage(url, options, (scraping_error, result) => {
+			let scrapingResult = result?.scrapingResult;
 			if (scrapingResult) {
 				try {
 					// hash url and use it as record id in database to fasten searching process of a record by id, and not by the url field
 					const hashedId = hashingLib.hashUrl(url);
 					const scrapedData = new ScrapedPageModel({
 						page_url: url,
+						totalWordsInPostsCaptions: result?.totalWordsInPostsCaptions,
 						content: scrapingResult
 					});
 
 					if (options?.extract_sentiment) {
 						console.log('Extracting sentiment from the scraped data...')
 
-						let captions = [];
+						// let captions = [];
 
-						scrapingResult?.result?.content.map(element => {
-							element.data.map(data => {
-								if (data.text) captions.push(data.text)
-							})
-						})
-						const { result, error } = sentimentLib.analyzeSentimentForCaptions(captions)
+						// scrapingResult?.result?.content.map(element => {
+						// 	element.data.map(data => {
+						// 		if (data.text) captions.push(data.text)
+						// 	})
+						// })
+						// const { result, error } = sentimentLib.analyzeSentimentForCaptions(captions)
 
 						saveScrapingData(hashedId, scrapedData, (error, response) => {
 							res.status(error ? 500 : 201).json({ error: error, result: response });

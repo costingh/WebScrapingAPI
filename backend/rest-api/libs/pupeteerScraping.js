@@ -1,37 +1,58 @@
 const puppeteer = require('puppeteer');
 const parser = require('./ParserHTML');
 
+let baseUrl = '';
+
 const scrapePage = async (urlToScrape, options, callback) => {
     let scrapedPages = new Set();
+    baseUrl = urlToScrape;
 
-    scrapeRecursive(urlToScrape, options, scrapedPages, callback);
+    const { error, result } = await scrapeRecursive(urlToScrape, options, scrapedPages);
+    callback(error, result)
 }
 
-const scrapeRecursive = async (startUrl, options, visitedUrls = new Set(), callback) => {
-    const browser = await puppeteer.launch({ headless: false }); 
-    const page = await browser.newPage();
-    const result = [];
+const scrapeRecursive = async (startUrl, options, visitedUrls = new Set()) => {
+    try {
+        const browser = await puppeteer.launch({ headless: false });
+        const page = await browser.newPage();
+        const scrapingResult = [];
+        const totalWordsInPostsCaptions = { value: 0 };
 
-    await visitPage(startUrl, page, result, options, visitedUrls); 
-    await browser.close();
-    callback(null, result);
+        await visitPage(startUrl, page, scrapingResult, options, visitedUrls, totalWordsInPostsCaptions);
+
+        await browser.close();
+
+        const result = {
+            scrapingResult,
+            totalWordsInPostsCaptions: totalWordsInPostsCaptions.value
+        }
+
+        return { error: null, result }
+    } catch(error) {
+        return {error, result: null}
+    }
 };
 
-const visitPage = async (url, page, result, options, visitedUrls) => {
+const visitPage = async (url, page, result, options, visitedUrls, totalWordsInPostsCaptions) => {
     if (!visitedUrls.has(url)) {
         visitedUrls.add(url);
         try {
             await page.goto(url, { waitUntil: 'networkidle2' });
             const htmlContent = await page.content();
 
-            const parsedData = parser.parseHTML(url, htmlContent, options);
+            const { parsedData, totalPostWordsInCaption } = parser.parseHTML(url, htmlContent, options);
+
+            if (url == baseUrl) {
+                console.log('Got ' + totalPostWordsInCaption + ' total words in all posts caption')
+                totalWordsInPostsCaptions.value += totalPostWordsInCaption;
+            }
 
             if (parsedData) result.push({ url, data: parsedData });
 
             const links = await page.$$eval('a', (links) => links.map((link) => link.href));
-            
+
             for (const link of links) {
-                await visitPage(link, page, result, options, visitedUrls); 
+                await visitPage(link, page, result, options, visitedUrls, totalWordsInPostsCaptions);
             }
         } catch (error) {
             console.error(`Error scraping ${url}: ${error.message}`);
