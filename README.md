@@ -181,3 +181,12 @@ Response Data Fromat
 * Default Depth: Setting up a reasonable default value for maxScrapingPageDepth. This default value should strike a balance between providing useful data and preventing excessive scraping.
 
 * User Configured Depth: Allowing users to customize the maxScrapingPageDepth by including it as an option in the API request. For example, users can set ?max_depth=5 to limit scraping to a depth of 5 levels.
+
+* Extract topic or top keywords from scraped data - using an auxiliar queue to schedule scraped data for topic extraction and update the database record with the topics
+
+* Analyze images to extract objects from them using AI or Machine learning -could not be done on the fly (queuing each image on a queue, where a consumer comes in to analyze it and extract the objects from it,then save it to database).
+* Rotating Proxies: To avoid getting banned or throttled by websites, implementing proxy rotation would be a great idea. This means switching between different proxy IPs for each request.
+* Change Monitoring: Email notifier/ User notifier when scraped data (that scrapes at regular time intervals) matches a specific expression
+* Data export format as CSV, XLS: Exporting extracted data in user desired format
+* Scraping Scheduling: Allow users to schedule automatic scraping at specified intervals, making it easy to keep data up to date without manual intervention.
+* Browser Extension: Developing a browser extension that integrates with this API, allowing users to scrape content from webpages directly through their web browser.
