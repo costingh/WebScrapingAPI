@@ -76,24 +76,24 @@ Response Data Fromat
 
 ```json
 {
-    "error": null | string,
+    "error": null | "string",
     "result": {
-        "date": "2023-09-28T18:06:52.576Z",
-        "page_url": "https://wsa-test.vercel.app/",
-        "totalWordsInPostsCaptions": 91,
-        "totalWordCount": 5892,
-        "sentiment": number, // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive
+        "date": "DateTime",
+        "page_url": "string",
+        "totalWordsInPostsCaptions": "number",
+        "totalWordCount": "number",
+        "sentiment": "number", // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive
         "content": [
           {
-            "url": string,
+            "url": "string",
             "data": [
-              "tag": string, // div, img, h2, span, etc.
-              "text": string,
-              "src": string, // only for img tags,
-              "alt": string // only for img tags,
-              "href": string, // only for anchor tags
-               "baseUrl": string // only for img tags and a, represents the base url of the scanned page as the src or href are relative and not absolute paths
-              "words": number, // integer number that represents the word count of the text field if it exists
+              "tag": "string", // div, img, h2, span, etc.
+              "text": "string",
+              "src": "string", // only for img tags,
+              "alt": "string" // only for img tags,
+              "href": "string", // only for anchor tags
+               "baseUrl": "string" // only for img tags and a, represents the base url of the scanned page as the src or href are relative and not absolute paths
+              "words": "number", // integer number that represents the word count of the text field if it exists
               
             ]
           }
@@ -113,24 +113,24 @@ Response Data Fromat
 
 ```json
 {
-    "error": null | string,
+    "error": "null" | "string",
     "result": {
-        "date": "2023-09-28T18:06:52.576Z",
-        "page_url": "https://wsa-test.vercel.app/",
-        "totalWordsInPostsCaptions": 91,
-        "totalWordCount": 5892,
-        "sentiment": number, // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive
+        "date": "DateTime",
+        "page_url": "string",
+        "totalWordsInPostsCaptions": "number",
+        "totalWordCount": "number",
+        "sentiment": "number", // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive
         "content": [
           {
-            "url": string,
+            "url": "string",
             "data": [
-              "tag": string, // div, img, h2, span, etc.
-              "text": string,
-              "src": string, // only for img tags,
-              "alt": string // only for img tags,
-              "href": string, // only for anchor tags
-               "baseUrl": string // only for img tags and a, represents the base url of the scanned page as the src or href are relative and not absolute paths
-              "words": number, // integer number that represents the word count of the text field if it exists
+              "tag": "string", // div, img, h2, span, etc.
+              "text": "string",
+              "src": "string", // only for img tags,
+              "alt": "string" // only for img tags,
+              "href": "string", // only for anchor tags
+               "baseUrl": "string" // only for img tags and a, represents the base url of the scanned page as the src or href are relative and not absolute paths
+              "words": "number", // integer number that represents the word count of the text field if it exists
               
             ]
           }
@@ -158,7 +158,8 @@ Response Data Fromat
 
 ```json
 {
-  "result": null | number, // represents a number between -1 and 1
-  "error": null | string
+  "result": null | "number", // "represents a number between -1 and 1"
+  "error": null | "string"
 
-}```
+}
+```
