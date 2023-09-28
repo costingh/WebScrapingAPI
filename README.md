@@ -74,7 +74,7 @@ Request Data Fromat
 Response Data Fromat
 ```
 
-```json
+```js
 {
     "error": null | "string",
     "result": {
@@ -111,7 +111,7 @@ Response Data Fromat
 Response Data Fromat
 ```
 
-```json
+```js
 {
     "error": "null" | "string",
     "result": {
@@ -156,7 +156,7 @@ Request Data Fromat
 Response Data Fromat
 ```
 
-```json
+```js
 {
   "result": null | "number", // "represents a number between -1 and 1"
   "error": null | "string"
