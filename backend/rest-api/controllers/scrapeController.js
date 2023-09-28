@@ -67,8 +67,19 @@ const scrapePage = (req, res) => {
 	}
 };
 
-const getScrapingResultById = (req, res) => {
-	return res.status(404).json({ error: 'Page scraping results were not found in DB' });
+const getScrapingResultById = async (req, res) => {
+
+	try {
+		const { scrapeId } = req.params;
+		const result = await ScrapedPageModel.findOne({ _id: scrapeId });
+		if (!result) {
+		  return res.status(404).json({ error: 'Page scraping results were not found in DB' });
+		}
+		return res.status(200).json(result);
+	  } catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: 'Internal server error' });
+	  }
 };
 
 const saveScrapingData = (_id, body, callback) => {
