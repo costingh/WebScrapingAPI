@@ -59,7 +59,7 @@ Environment variables that should be used for configuration
 Request Data Fromat
 ```
 
-```json
+```js
 {
     "url":  string,
      "options": {
@@ -146,7 +146,7 @@ Response Data Fromat
 Request Data Fromat
 ```
 
-```json
+```js
 {
   text: string, // represents the text to be scanned for sentiment analysis
 }
