@@ -18,33 +18,46 @@ const scrapePage = (req, res) => {
 				try {
 					// hash url and use it as record id in database to fasten searching process of a record by id, and not by the url field
 					const hashedId = hashingLib.hashUrl(url);
-					const scrapedData = new ScrapedPageModel({
-						page_url: url,
-						totalWordsInPostsCaptions: result?.totalWordsInPostsCaptions,
-						totalWordCount: result?.totalWordCount,
-						content: scrapingResult
-					});
+					let sentiment = null;
 
 					if (options?.extract_sentiment) {
 						console.log('Extracting sentiment from the scraped data...')
 
-						// let captions = [];
-
-						// scrapingResult?.result?.content.map(element => {
-						// 	element.data.map(data => {
-						// 		if (data.text) captions.push(data.text)
-						// 	})
-						// })
-						// const { result, error } = sentimentLib.analyzeSentimentForCaptions(captions)
-
-						saveScrapingData(hashedId, scrapedData, (error, response) => {
-							res.status(error ? 500 : 201).json({ error: error, result: response });
+						let captions = [];
+						scrapingResult.map(element => {
+							element.data.map(data => {
+								if (data.text) captions.push(data.text)
+							})
 						})
-					} else {
-						saveScrapingData(hashedId, scrapedData, (error, response) => {
-							res.status(error ? 500 : 201).json({ error: error, result: response });
-						})
-					}
+						const { sentimentScore, error } = sentimentLib.analyzeSentimentForCaptions(captions)
+						if(error) {
+							console.log('Error extracting sentiment')
+							console.log(JSON.stringify(error, null, 2))
+						}
+
+						console.log('sentimentScore ' + sentimentScore)
+						sentiment = sentimentScore;
+					} 
+
+					console.log('sentiment ' + sentiment)
+
+
+					let dataToSave = {
+						page_url: url,
+						totalWordsInPostsCaptions: result?.totalWordsInPostsCaptions,
+						totalWordCount: result?.totalWordCount,
+						content: scrapingResult,
+					};
+
+					if(sentiment != null) dataToSave.sentiment = sentiment;
+
+					console.log(dataToSave)
+
+					const scrapedData = new ScrapedPageModel(dataToSave);
+
+					saveScrapingData(hashedId, scrapedData, (error, response) => {
+						res.status(error ? 500 : 201).json({ error: error, result: response });
+					})
 				} catch (error) {
 					res.status(500).json({ error: error?.message || 'Error saving scraped data to DB', result: null });
 				}
@@ -63,10 +76,13 @@ const scrapePage = (req, res) => {
 					if (data.text) captions.push(data.text)
 				})
 			})
-			const { result, error } = sentimentLib.analyzeSentimentForCaptions(captions)
+			const { sentimentScore, error } = sentimentLib.analyzeSentimentForCaptions(captions)
+			console.log('=============================')
+			console.log(error)
+			console.log(sentimentScore)
 
 			res.status(201).json({ error: error, result: mocks.mockData?.result });
-		} else res.status(201).json({ error: null, result: result });
+		} else res.status(201).json({ error: null, result: mocks.mockData?.result });
 	}
 };
 
