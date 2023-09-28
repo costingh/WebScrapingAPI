@@ -15,6 +15,9 @@ const ScrapedPageSchema = new mongoose.Schema({
     totalWordsInPostsCaptions: {
         type: Number,
     },
+    totalWordCount: {
+        type: Number,
+    },
     date: { type: Date, default: Date.now },
 });
 

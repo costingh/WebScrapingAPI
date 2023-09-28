@@ -17,14 +17,24 @@ const scrapeRecursive = async (startUrl, options, visitedUrls = new Set()) => {
         const page = await browser.newPage();
         const scrapingResult = [];
         const totalWordsInPostsCaptions = { value: 0 };
+        let totalWordCount = 0;
 
         await visitPage(startUrl, page, scrapingResult, options, visitedUrls, totalWordsInPostsCaptions);
+
+        totalWordCount = scrapingResult.reduce((total, pageData) => {
+            if (pageData.url !== startUrl) {
+                return total + pageData.data.reduce((pageTotal, element) => pageTotal + element.words, 0);
+            }
+            return total;
+        }, 0),
+        totalWordCount += totalWordsInPostsCaptions.value;
 
         await browser.close();
 
         const result = {
+            totalWordCount,
+            totalWordsInPostsCaptions: totalWordsInPostsCaptions.value,
             scrapingResult,
-            totalWordsInPostsCaptions: totalWordsInPostsCaptions.value
         }
 
         return { error: null, result }

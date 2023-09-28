@@ -21,6 +21,7 @@ const scrapePage = (req, res) => {
 					const scrapedData = new ScrapedPageModel({
 						page_url: url,
 						totalWordsInPostsCaptions: result?.totalWordsInPostsCaptions,
+						totalWordCount: result?.totalWordCount,
 						content: scrapingResult
 					});
 
