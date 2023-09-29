@@ -21,6 +21,7 @@
     "mongoose": "^7.5.3",
     "morgan": "^1.10.0",
     "natural": "^6.7.2",
+    "nodemailer": "^6.9.5",
     "puppeteer": "^21.3.5",
     "spelling-corrector": "^3.0.0",
     "stopword": "^2.0.8"

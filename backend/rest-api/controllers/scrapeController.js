@@ -3,21 +3,24 @@ const { ScrapedPageModel } = require('../models/scrapedPage')
 const hashingLib = require('../libs/hashUrl');
 const sentimentLib = require('../libs/ExtractSentiment');
 const mocks = require('../mockups/mockData')
+const {transporter} = require('../emailService/transporter')
 
 const scrapePage = (req, res) => {
 	const { url, options } = req.body;
 
 	if (!url) {
-		return res.status(400).json({ error: 'Title is required' });
+		return res.status(400).json({ error: 'Url is required' });
 	}
+
+	// hash url and use it as record id in database to fasten searching process of a record by id, and not by the url field
+	const hashedId = hashingLib.hashUrl(url);
 
 	if (!options.test_mode) {
 		pupeteerScraping.scrapePage(url, options, (scraping_error, result) => {
 			let scrapingResult = result?.scrapingResult;
 			if (scrapingResult) {
 				try {
-					// hash url and use it as record id in database to fasten searching process of a record by id, and not by the url field
-					const hashedId = hashingLib.hashUrl(url);
+					
 					let sentiment = null;
 
 					if (options?.extract_sentiment) {
@@ -35,12 +38,10 @@ const scrapePage = (req, res) => {
 							console.log(JSON.stringify(error, null, 2))
 						}
 
-						console.log('sentimentScore ' + sentimentScore)
 						sentiment = sentimentScore;
 					} 
 
-					console.log('sentiment ' + sentiment)
-
+					// console.log('sentiment ' + sentiment)
 
 					let dataToSave = {
 						page_url: url,
@@ -51,7 +52,7 @@ const scrapePage = (req, res) => {
 
 					if(sentiment != null) dataToSave.sentiment = sentiment;
 
-					console.log(dataToSave)
+					// console.log(dataToSave)
 
 					const scrapedData = new ScrapedPageModel(dataToSave);
 
@@ -77,12 +78,31 @@ const scrapePage = (req, res) => {
 				})
 			})
 			const { sentimentScore, error } = sentimentLib.analyzeSentimentForCaptions(captions)
-			console.log('=============================')
-			console.log(error)
-			console.log(sentimentScore)
 
 			res.status(201).json({ error: error, result: mocks.mockData?.result });
 		} else res.status(201).json({ error: null, result: mocks.mockData?.result });
+	}
+
+
+	if(options?.email_notify && options?.email_notify.notify_user && options?.email_notify.user_email) {
+		console.log('Should send email to user ' + options?.email_notify.user_email)
+
+		const urlToViewScrapedData = `http://localhost:5173/scraped-data/${hashedId}`
+		const mailOptions = {
+			from: 'gheorghecostin221@gmail.com',
+			to: options?.email_notify.user_email,
+			subject: 'Scraped data from ' + url + ' website',
+			text: 'Please check the following link to see the scraped data: ' + urlToViewScrapedData
+		};
+		
+		transporter.sendMail(mailOptions, function (error, info) {
+			if (error) {
+				console.log('Email could not be sent :(')
+				console.log(error);
+			} else {
+				console.log('Email sent: ' + info.response);
+			}
+		}); 
 	}
 };
 
