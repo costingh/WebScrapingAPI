@@ -80,9 +80,9 @@ Response Data Fromat
     "result": {
         "date": "DateTime",
         "page_url": "string",
-        "totalWordsInPostsCaptions": "number",
-        "totalWordCount": "number",
-        "sentiment": "number", // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive
+        "totalWordsInPostsCaptions": "number", // total words from each post caption (visible on the blog's first page)
+        "totalWordCount": "number", // total number of words (including first page's post caption and post description after navigating on the post link)
+        "sentiment": "number", // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive (extracted just from posts captions)
         "content": [
           {
             "url": "string",
@@ -117,9 +117,9 @@ Response Data Fromat
     "result": {
         "date": "DateTime",
         "page_url": "string",
-        "totalWordsInPostsCaptions": "number",
-        "totalWordCount": "number",
-        "sentiment": "number", // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive
+        "totalWordsInPostsCaptions": "number", // total words from each post caption (visible on the blog's first page)
+        "totalWordCount": "number", // total number of words (including first page's post caption and post description after navigating on the post link)
+        "sentiment": "number", // a floating point number in the interval [-1, 1], where -1 is negative sentiment and 1 positive (extracted just from posts captions)
         "content": [
           {
             "url": "string",
