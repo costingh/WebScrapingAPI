@@ -8,6 +8,15 @@ WebScrapingAPI is a versatile web scraping and sentiment analysis tool designed 
 
 Clone the repository: git@github.com:costingh/WebScrapingAPI.git
 
+## Implementation
+
+### Technologies & Integrations
+
+For backend development I have used NodeJS, for easy customization and integrations with other technologies (pupteer, cheerio - scraping, nodemailer - for sending emails, and other). I have created a simple rest api, that scrapes some data, saves it to MongoDB database (using mongoose library to ease communication between NodeJS app an MongoDB), retrieves it, sends an automated email to the user that initiated the scraping. Other routes consist in nlp processing over the scraped data (sentiment analysis - for now).
+The frontend was developed using VueJS (a technology i was unfamiliar with, but i have managed to create a simple app, with a simple routing component, to display some data). I have learnt how to communicate from child to parent components and vice-versa and also how to add custom events on html elements and execute methods when events are fired.
+
+I have used NodeJS over Python (even though it is multi-threaded), beacause i was familiar with it and beacuse of ease of development.
+
 ## Folder structure
 ```shell
 /WebScrapingAPI/backend-rest-api
@@ -65,7 +74,11 @@ Request Data Fromat
      "options": {
          "test_mode": boolean,
          "scrape_elements": string, // html elements separated by ", ": "h1, h2, h4, h5, a, span, div, sup, img"
-         "extract_sentiment": boolean
+         "extract_sentiment": boolean,
+         "email_notify": {          // optional
+             "notify_user": boolean,
+             "user_email": string // email of the receiver of the message
+         }
     }
 }
 ```
