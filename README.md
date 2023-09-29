@@ -2,7 +2,7 @@
 
 ## Overview
 
-WebScrapingAPI is a versatile web scraping and sentiment analysis tool designed for extracting structured data from webpages and performing sentiment analysis on text.
+WebScrapingAPI is a web scraping tool designed for extracting structured data from webpages and performing sentiment analysis on text.
 
 ## Installation
 
