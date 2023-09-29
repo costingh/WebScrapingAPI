@@ -38,7 +38,11 @@ To perform sentiment analysis on the scraped content, I have implemented the fol
 * First, I tokenize the text, extracting each word (improvement: converting it to lowercase)
 * I constructed a dictionary with two lists of words: one for positive words and another for negative words.
 * Next, I iterate over the words in the text and count the number of positive and negative words.
-* Then, i calculate the sentimentScore as ```const sentimentScore = (positiveCount - negativeCount) / totalWords;```
+* Then, i calculate the sentimentScore as
+  ```js
+  const sentimentScore = (positiveCount - negativeCount) / totalWords;
+  ```
+  
 * Finally, I normalize the sentiment score to fit within the range of [-1, 1], where -1 represents a negative sentiment, 0 denotes neutrality, and 1 signifies a positive sentiment.
  
 ## Adding a Unique Feature
