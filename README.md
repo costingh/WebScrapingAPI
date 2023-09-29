@@ -12,11 +12,41 @@ Clone the repository: git@github.com:costingh/WebScrapingAPI.git
 
 ### Technologies & Integrations
 
-For backend development I have used NodeJS, for easy customization and integrations with other technologies (pupteer, cheerio - scraping, nodemailer - for sending emails, and other). I have created a simple rest api, that scrapes some data, saves it to MongoDB database (using mongoose library to ease communication between NodeJS app an MongoDB), retrieves it, sends an automated email to the user that initiated the scraping. Other routes consist in nlp processing over the scraped data (sentiment analysis - for now).
-The frontend was developed using VueJS (a technology i was unfamiliar with, but i have managed to create a simple app, with a simple routing component, to display some data). I have learnt how to communicate from child to parent components and vice-versa and also how to add custom events on html elements and execute methods when events are fired.
+For the backend development of this project, Node.js was used to provide a flexible foundation for seamless customization and integration with various technologies such as Puppeteer for web scraping, Cheerio for data extraction, Nodemailer for email communication, and more. The backend contains a REST API designed to scrape specific data, store it in a MongoDB database utilizing the Mongoose library to streamline interactions between the Node.js application and MongoDB. This data can be retrieved, and an automated email is sent to the user who initiated the scraping process. Additionally, the backend features routes for natural language processing (NLP) operations on the scraped data, currently supporting sentiment analysis.
 
-I have used NodeJS over Python (even though it is multi-threaded), beacause i was familiar with it and beacuse of ease of development.
+On the frontend, Vue.js was used to create a user-friendly interface. Despite being a technology initially unfamiliar to me, i have crafted a simple application, with routing and other components to display data. Throughout the frontend development, I have gained valuable skills, including communication between child and parent components, the implementation of custom events on HTML elements, and the execution of methods triggered by these events.
 
+Node.js was chosen over Python, despite Python's multi-threading capabilities, due to my familiarity with Node.js and the ease it offers for rapid development.
+
+## Adding a Unique Feature
+
+As a distinctive addition to this API, I've implemented an email integration feature using Nodemailer. This feature enables automated email notifications to be sent to users once the scraping process is completed. Given that web scraping can be a time-consuming task, especially considering the complexity and depth of certain websites, users now have the option to receive notifications once the application has successfully gathered their requested data.
+
+## Features that could set this API apart / Improvements
+
+* Limiting Result Size: Instead of returning the entire dataset in a single response, we should limit the number of records returned by default. For example, setting up a default limit of 10 records per page.
+
+* Allowing Custom Page Size: Allowing users to specify the number of records they want per page. We should include a query parameter in the API request, such as ?page_size=20, to let users customize the result set size.
+
+* Including Page Number: Return the current page number along with the results. This helps users keep track of where they are in the dataset.
+
+* Provide Navigation Links: Include links or URLs for navigating to the next and previous pages. For example:
+
+* Rate Limiting: Implementing rate limiting to prevent abuse and ensure fair usage.
+
+* Default Depth: Setting up a reasonable default value for maxScrapingPageDepth. This default value should strike a balance between providing useful data and preventing excessive scraping.
+
+* User Configured Depth: Allowing users to customize the maxScrapingPageDepth by including it as an option in the API request. For example, users can set ?max_depth=5 to limit scraping to a depth of 5 levels.
+
+* Extract topic or top keywords from scraped data - using an auxiliar queue to schedule scraped data for topic extraction and update the database record with the topics
+
+* Analyze images to extract objects from them using AI or Machine learning -could not be done on the fly (queuing each image on a queue, where a consumer comes in to analyze it and extract the objects from it,then save it to database).
+* Rotating Proxies: To avoid getting banned or throttled by websites, implementing proxy rotation would be a great idea. This means switching between different proxy IPs for each request.
+* Change Monitoring: Email notifier/ User notifier when scraped data (scraped at regular time intervals) matches a specific expression
+* Data export format as CSV, XLS: Exporting extracted data in user desired format
+* Scraping Scheduling: Allow users to schedule automatic scraping at specified intervals, making it easy to keep data up to date without manual intervention.
+* Browser Extension: Developing a browser extension that integrates with this API, allowing users to scrape content from webpages directly through their web browser.
+  
 ## Folder structure
 ```shell
 /WebScrapingAPI/backend-rest-api
@@ -176,30 +206,3 @@ Response Data Fromat
 
 }
 ```
-
-## Improvements
-
-### Pagination
-
-* Limiting Result Size: Instead of returning the entire dataset in a single response, we should limit the number of records returned by default. For example, setting up a default limit of 10 records per page.
-
-* Allowing Custom Page Size: Allowing users to specify the number of records they want per page. We should include a query parameter in the API request, such as ?page_size=20, to let users customize the result set size.
-
-* Including Page Number: Return the current page number along with the results. This helps users keep track of where they are in the dataset.
-
-* Provide Navigation Links: Include links or URLs for navigating to the next and previous pages. For example:
-
-* Rate Limiting: Implementing rate limiting to prevent abuse and ensure fair usage.
-
-* Default Depth: Setting up a reasonable default value for maxScrapingPageDepth. This default value should strike a balance between providing useful data and preventing excessive scraping.
-
-* User Configured Depth: Allowing users to customize the maxScrapingPageDepth by including it as an option in the API request. For example, users can set ?max_depth=5 to limit scraping to a depth of 5 levels.
-
-* Extract topic or top keywords from scraped data - using an auxiliar queue to schedule scraped data for topic extraction and update the database record with the topics
-
-* Analyze images to extract objects from them using AI or Machine learning -could not be done on the fly (queuing each image on a queue, where a consumer comes in to analyze it and extract the objects from it,then save it to database).
-* Rotating Proxies: To avoid getting banned or throttled by websites, implementing proxy rotation would be a great idea. This means switching between different proxy IPs for each request.
-* Change Monitoring: Email notifier/ User notifier when scraped data (scraped at regular time intervals) matches a specific expression
-* Data export format as CSV, XLS: Exporting extracted data in user desired format
-* Scraping Scheduling: Allow users to schedule automatic scraping at specified intervals, making it easy to keep data up to date without manual intervention.
-* Browser Extension: Developing a browser extension that integrates with this API, allowing users to scrape content from webpages directly through their web browser.
