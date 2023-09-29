@@ -18,6 +18,29 @@ On the frontend, Vue.js was used to create a user-friendly interface. Despite be
 
 Node.js was chosen over Python, despite Python's multi-threading capabilities, due to my familiarity with Node.js and the ease it offers for rapid development.
 
+
+## Extracting posts caption
+
+I've divided the process of calculating word counts in captions into two distinct tasks.
+
+Firstly, I extract each post caption from the main page (which is essentially a list of posts), count the words in each caption, and then sum up the word counts.
+
+Secondly, I perform a separate task where I count the words in the captions of individual post pages and then add this count to the sum obtained in the first task.
+
+In the first task, I've identified that the caption is contained within an element with the ".group" class, which is a static class name. I've selected the relevant text from these elements for word counting.
+
+For the second task, I've counted the words in all the text found on each post's page, treating each text as a post caption (excluding any words in image alt attributes).
+
+## Sentiment analysis algorithm
+
+To perform sentiment analysis on the scraped content, I have implemented the following algorithm:
+    
+* First, I tokenize the text, extracting each word (improvement: converting it to lowercase)
+* I constructed a dictionary with two lists of words: one for positive words and another for negative words.
+* Next, I iterate over the words in the text and count the number of positive and negative words.
+* Then, i calculate the sentimentScore as ```js const sentimentScore = (positiveCount - negativeCount) / totalWords;```
+* Finally, I normalize the sentiment score to fit within the range of [-1, 1], where -1 represents a negative sentiment, 0 denotes neutrality, and 1 signifies a positive sentiment.
+ 
 ## Adding a Unique Feature
 
 As a distinctive addition to this API, I've implemented an email integration feature using Nodemailer. This feature enables automated email notifications to be sent to users once the scraping process is completed. Given that web scraping can be a time-consuming task, especially considering the complexity and depth of certain websites, users now have the option to receive notifications once the application has successfully gathered their requested data.
