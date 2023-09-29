@@ -22,6 +22,15 @@ Node.js was chosen over Python, despite Python's multi-threading capabilities, d
 
 As a distinctive addition to this API, I've implemented an email integration feature using Nodemailer. This feature enables automated email notifications to be sent to users once the scraping process is completed. Given that web scraping can be a time-consuming task, especially considering the complexity and depth of certain websites, users now have the option to receive notifications once the application has successfully gathered their requested data.
 
+At the moment, this feature is not implemented in Frontend.
+The user receives an email like this one:
+
+```js
+Please check the following link to see the scraped data: http://localhost:5173/scraped-data/d9b739d2ecb97f8532e1c3dacd4bb26c
+```
+
+To open the link in the Vuejs interface, it is enough to seng a ```GET``` request to the ``` /api/scrape/get-data/:scrapeId``` API route, like this: ```GET /api/scrape/get-data/d9b739d2ecb97f8532e1c3dacd4bb26c```
+
 ## Features that could set this API apart / Improvements
 
 * Limiting Result Size: Instead of returning the entire dataset in a single response, we should limit the number of records returned by default. For example, setting up a default limit of 10 records per page.
@@ -100,12 +109,12 @@ Request Data Fromat
 
 ```js
 {
-    "url":  string,
-     "options": {
+    "url":  string,                // required
+     "options": {                  // optional (each property is optional)
          "test_mode": boolean,
          "scrape_elements": string, // html elements separated by ", ": "h1, h2, h4, h5, a, span, div, sup, img"
          "extract_sentiment": boolean,
-         "email_notify": {          // optional
+         "email_notify": {          
              "notify_user": boolean,
              "user_email": string // email of the receiver of the message
          }
